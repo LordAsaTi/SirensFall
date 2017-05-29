@@ -6,7 +6,7 @@ public class ProjectilBehaviour : MonoBehaviour {
 
     int direction = 0; // 1 = up | 2 = down
     float speed = 0.3f;
-    int dmg = 1;
+    float dmg = 1;
 	// Use this for initialization
 	void Start () {
 		
@@ -27,13 +27,17 @@ public class ProjectilBehaviour : MonoBehaviour {
     {
         this.direction = direction; 
     }
-    void SetDamage(int damage)
+    void SetDamage(float damage)
     {
         dmg = damage;
     }
     void SetSpeed(float speed)
     {
         this.speed = speed;
+    }
+    public float GetDmg()
+    {
+        return dmg;
     }
 
 }
