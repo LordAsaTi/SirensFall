@@ -16,7 +16,7 @@ public class SirenAttackSub : MonoBehaviour {
 	}
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (!siren.GetComponent<SirenBehaviour>().getDead()){
+        if (!siren.GetComponent<SirenBehaviour>().getDead() && !(coll.gameObject.tag == "Projectile")){
             siren.SendMessage("Attack", coll);
         }
     }
