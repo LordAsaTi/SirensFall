@@ -5,28 +5,39 @@ using UnityEngine;
 public class NPCShipBehaviour : MonoBehaviour {
 
     bool go = false;
+    public float speed = 0.01f;
+    Vector3 startTrans;
 	// Use this for initialization
 	void Start () {
-		
+        startTrans = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (go)
         {
-            transform.position += new Vector3(0.01f, 0, 0);
+            transform.position += new Vector3(1 * speed, 0, 0);
         }
 	}
     public void Move()
     {
-        transform.position = new Vector3(-11, 2.7f, 0);
+        transform.position = startTrans;//new Vector3(-11, 2.7f, 0);
         go = true;
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
+        if(coll.gameObject.tag == "Projectile")
+        {
+            Attacked();
+            Destroy(coll.gameObject);
+        }
+        
+    }
+    void Attacked()
+    {
         go = false;
-        Destroy(coll.gameObject);
         GetComponent<SpriteRenderer>().color = Color.red;
     }
+
 
 }

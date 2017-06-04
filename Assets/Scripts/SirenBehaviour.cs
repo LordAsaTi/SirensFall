@@ -6,7 +6,7 @@ public class SirenBehaviour : MonoBehaviour {
 
     public float life = 10;
     float maxLife;
-    float coolDownInSec = 2.5f;
+    float coolDownInSec = 7f;
     private float timeStamp = 2.5f;
     bool dead = false;
 
@@ -24,12 +24,19 @@ public class SirenBehaviour : MonoBehaviour {
             GetComponent<SpriteRenderer>().color = Color.green;
         }
 	}
+    public bool getDead()
+    {
+        return dead;
+    }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (!dead) { 
-            ProjectilBehaviour hitScript = coll.gameObject.GetComponent<ProjectilBehaviour>();
-            Destroy(coll.gameObject);
-            DmgTaken(hitScript.GetDmg());
+        if (!dead) {
+            if (coll.gameObject.tag == "Projectile")
+            {
+                ProjectilBehaviour hitScript = coll.gameObject.GetComponent<ProjectilBehaviour>();
+                Destroy(coll.gameObject);
+                DmgTaken(hitScript.GetDmg());
+            }
         }
     }
     void DmgTaken(float dmg)
@@ -41,6 +48,10 @@ public class SirenBehaviour : MonoBehaviour {
             timeStamp = Time.time + coolDownInSec;
             dead = true; 
         }
+    }
+    void Attack(Collider2D coll)
+    {
+        coll.gameObject.SendMessage("Attacked");
     }
 
 
