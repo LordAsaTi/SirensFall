@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NPCShipBehaviour : MonoBehaviour {
 
+    float pointValue = 1;
+
     bool go = false;
     public float speed = 0.01f;
     Vector3 startTrans;
@@ -21,7 +23,7 @@ public class NPCShipBehaviour : MonoBehaviour {
 	}
     public void Move()
     {
-        transform.position = startTrans;//new Vector3(-11, 2.7f, 0);
+        //transform.position = startTrans;//new Vector3(-11, 2.7f, 0);
         go = true;
     }
     void OnTriggerEnter2D(Collider2D coll)
@@ -37,6 +39,10 @@ public class NPCShipBehaviour : MonoBehaviour {
     {
         go = false;
         GetComponent<SpriteRenderer>().color = Color.red;
+    }
+    public float getPointValue()
+    {
+        return pointValue;
     }
 
 

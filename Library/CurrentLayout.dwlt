@@ -107,8 +107,8 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 679, y: 421}
-  m_MaxSize: {x: 12008, y: 8021}
+  m_MinSize: {x: 713, y: 471}
+  m_MaxSize: {x: 18008, y: 14021}
   vertical: 0
   controlID: 11
 --- !u!114 &6
@@ -209,8 +209,8 @@ MonoBehaviour:
     y: 0
     width: 474
     height: 947
-  m_MinSize: {x: 200, y: 321}
-  m_MaxSize: {x: 4004, y: 8021}
+  m_MinSize: {x: 234, y: 471}
+  m_MaxSize: {x: 10004, y: 14021}
   vertical: 1
   controlID: 67
 --- !u!114 &10
@@ -256,14 +256,14 @@ MonoBehaviour:
     y: 436
     width: 474
     height: 511
-  m_MinSize: {x: 104, y: 121}
-  m_MaxSize: {x: 4004, y: 4021}
-  m_ActualView: {fileID: 24}
+  m_MinSize: {x: 234, y: 271}
+  m_MaxSize: {x: 10004, y: 10021}
+  m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
   - {fileID: 24}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -436,14 +436,14 @@ MonoBehaviour:
     width: 1028
     height: 434
   m_SceneLighting: 1
-  lastFramingTime: 357.70205870290806
+  lastFramingTime: 11399.752006402054
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.9632653, y: 1.8562803, z: 0}
+    m_Target: {x: -4.5086193, y: 2.3466327, z: 0}
     speed: 2
-    m_Value: {x: -1.9632653, y: 1.8562803, z: 0}
+    m_Value: {x: -4.5086193, y: 2.3466327, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -470,9 +470,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 13.006611
+    m_Target: 28.96438
     speed: 2
-    m_Value: 13.006611
+    m_Value: 28.96438
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -610,7 +610,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: dcfbffff00000000f0250000
+    m_ExpandedIDs: c06affffdcfbffff00000000dc250000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -670,18 +670,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Prefabs
   m_LastFoldersGridSize: 16
   m_LastProjectPath: E:\Thomas\UnityProjects\SirensFall
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: fe240000
-    m_LastClickedID: 9470
+    m_SelectedIDs: 1c250000
+    m_LastClickedID: 9500
     m_ExpandedIDs: 00000000be240000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -735,24 +735,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 58260000
-    m_LastClickedInstanceID: 9816
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 1c6dffff742800000067feff62defcffe60400006e05000094460000fa05000026dfffff225bfffffc050000ce0d0000d20d00005a1d0000fe1c00002a25000046250000cc2900008a220000a82200000000000002d6ffff
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: SpawnNPCShips
+      m_OriginalName: SpawnNPCShips
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 11038
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
