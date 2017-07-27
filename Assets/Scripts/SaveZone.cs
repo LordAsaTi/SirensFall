@@ -15,7 +15,7 @@ public class SaveZone : MonoBehaviour {
 	}
     void OnTriggerEnter2D(Collider2D coll)
     {
-        PlayerPrefs.SetFloat("Points", coll.gameObject.GetComponent<NPCShipBehaviour>().getPointValue());
+        PlayerPrefs.SetFloat("Points", PlayerPrefs.GetFloat("Points") + coll.gameObject.GetComponent<NPCShipBehaviour>().getPointValue());
         Destroy(coll.gameObject);
     }
 }
