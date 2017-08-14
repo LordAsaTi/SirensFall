@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpecialsMainShip : MonoBehaviour {
 
     GameObject[] allyArray;
-    float shieldDuration = 1f;
+    float shieldDuration = 2f;
 	// Use this for initialization
 	void Start () {
 		
@@ -28,11 +28,13 @@ public class SpecialsMainShip : MonoBehaviour {
         for(int i = 0; i < allyArray.Length; i++)
         {
             allyArray[i].GetComponent<Collider2D>().enabled = false;
+            allyArray[i].transform.GetChild(0).gameObject.SetActive(true);
         }
         yield return new WaitForSeconds(shieldDuration);
         for (int i = 0; i < allyArray.Length; i++)
         {
             allyArray[i].GetComponent<Collider2D>().enabled = true;
+            allyArray[i].transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 

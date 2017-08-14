@@ -12,6 +12,7 @@ public class NPCShipBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         startTrans = transform.position;
+
 	}
 	
 	// Update is called once per frame
@@ -28,12 +29,13 @@ public class NPCShipBehaviour : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if(coll.gameObject.tag == "Projectile")
-        {
-            Attacked();
-            Destroy(coll.gameObject);
-        }
-        
+        if (GetComponent<BoxCollider2D>().isActiveAndEnabled) {
+            if(coll.gameObject.tag == "Projectile")
+                    {
+                        Attacked();
+                        Destroy(coll.gameObject);
+                    }
+        }        
     }
     void Attacked()
     {
