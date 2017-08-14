@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpecialsMainShip : MonoBehaviour {
 
     GameObject[] allyArray;
-    float shieldDuration = 2f;
+    float shieldDuration = 5f;
 	// Use this for initialization
 	void Start () {
 		
