@@ -14,26 +14,31 @@ public class ButtonBehaviour : MonoBehaviour {
     // Use this for initialization
 
     void Start () {
-		
+        currentAmount = 100;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(currentAmount < 100)
         {
+            GetComponent<Button>().interactable = false;
+            loadingCircle.gameObject.SetActive(true);
             currentAmount += speed * Time.deltaTime;
             textIndicator.GetComponent<Text>().text = ((int)currentAmount).ToString() + "%";
-            textLoading.gameObject.SetActive(true);
+            textLoading.GetComponent<Text>().color = Color.grey;
         }
         else
         {
-            textLoading.gameObject.SetActive(false);
-            textIndicator.GetComponent<Text>().text = "DONE!";
+            GetComponent<Button>().interactable = true;
+            loadingCircle.gameObject.SetActive(false);
+            textLoading.GetComponent<Text>().color = Color.black;
+            textIndicator.GetComponent<Text>().text = "";
         }
         loadingCircle.GetComponent<Image>().fillAmount = currentAmount / 100;
 	}
-    void CooldownButton()
+    void SetCooldown(float time)
     {
-
+        speed = time;
+        currentAmount = 0;
     }
 }
