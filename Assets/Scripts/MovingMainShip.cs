@@ -6,7 +6,7 @@ public class MovingMainShip : MonoBehaviour {
 
     Transform trans;
 
-    public float speed = 0.5f;
+    float speed = 2f;
     bool activeR;
     bool activeL;
     bool facingRight = true;
@@ -30,18 +30,26 @@ public class MovingMainShip : MonoBehaviour {
             trans.position += Vector3.left * speed;
         }
         */
-        if (activeR)
+        if (activeR && trans.position.x < 6.8)
         {
-            rigi.AddForce(Vector2.right);
+            rigi.AddForce(new Vector2(1 * speed, 0));
         }
-        else if (activeL)
+        else if (activeL && trans.position.x > -7.6)
         {
-            rigi.AddForce(Vector2.left);
+            rigi.AddForce(new Vector2(-1 * speed, 0));
         }
         else
         {
             
             
+        }
+        if(trans.position.x < -7.6)
+        {
+            rigi.velocity = Vector3.zero;
+        }
+        if(trans.position.x > 6.8)
+        {
+            rigi.velocity = Vector3.zero;
         }
 	}
 
