@@ -9,6 +9,7 @@ public class MovingMainShip : MonoBehaviour {
     public float speed = 0.5f;
     bool activeR;
     bool activeL;
+    bool facingRight = true;
     Rigidbody2D rigi;
 	// Use this for initialization
 	void Start () {
@@ -47,9 +48,24 @@ public class MovingMainShip : MonoBehaviour {
     public void MoveRight()
     {
         activeR = !activeR;
+        if (!facingRight)
+        {
+            FlipH();
+        }
     }
     public void MoveLeft()
     {
         activeL = !activeL;
+        if (facingRight)
+        {
+            FlipH();
+        }
+    }
+    void FlipH()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }
