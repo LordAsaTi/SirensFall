@@ -9,13 +9,17 @@ public class MovingMainShip : MonoBehaviour {
     public float speed = 0.5f;
     bool activeR;
     bool activeL;
+    Rigidbody2D rigi;
 	// Use this for initialization
 	void Start () {
         trans = this.transform;
+        rigi = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        //Old Stuff
+        /*
         if (activeR && trans.position.x < 6.8)
         {
             trans.position += Vector3.right * speed;
@@ -23,6 +27,20 @@ public class MovingMainShip : MonoBehaviour {
         else if (activeL && trans.position.x > -7.6)
         {
             trans.position += Vector3.left * speed;
+        }
+        */
+        if (activeR)
+        {
+            rigi.AddForce(Vector2.right);
+        }
+        else if (activeL)
+        {
+            rigi.AddForce(Vector2.left);
+        }
+        else
+        {
+            
+            
         }
 	}
 
