@@ -11,6 +11,6 @@ public class StartAndQuit : MonoBehaviour {
 	}
     public void StartButton()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }
