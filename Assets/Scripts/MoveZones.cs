@@ -23,15 +23,15 @@ public class MoveZones : MonoBehaviour {
         {
             StartCoroutine(MoveY(10));
         }
-	}
+    }
     IEnumerator MoveY(int ySpeed)
     {
         for(int i = 0;i < 65; i++)
         {
             shootUpTrans.Translate(Vector3.up * ySpeed, Space.World);
             shootDownTrans.Translate(Vector3.up * ySpeed);
-            Player.transform.Translate(Vector3.up * ySpeed * 0.014f);
-            yield return new WaitForSeconds(0.1f);
+            Player.transform.Translate(Vector3.up * ySpeed * 0.014f); // 0.014 seams to be the equallity to 1 in GUI
+            yield return new WaitForSeconds(0.05f);
         }
 
         yield return null;
