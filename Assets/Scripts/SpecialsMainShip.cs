@@ -6,17 +6,16 @@ public class SpecialsMainShip : MonoBehaviour {
 
     GameObject[] allyArray;
     float shieldDuration = 5f;
+    float bombShotDuration = 5f;
     float cooldown;
     GameObject ButtonSpez1;
-    float laneHeight;
-    Transform myTrans;
+    GameObject ButtonSpez2;
     ShootMainShip shootScript;
-    public GameObject testFrame;
+
     // Use this for initialization
     void Start () {
         ButtonSpez1 = GameObject.Find("Button Spezial 1");
-        laneHeight = (Camera.main.orthographicSize * 2f)/ 10;
-        myTrans = GetComponent<Transform>();
+        ButtonSpez1 = GameObject.Find("Button Spezial 2");
         shootScript = GetComponent<ShootMainShip>();
     }
 	
@@ -35,11 +34,11 @@ public class SpecialsMainShip : MonoBehaviour {
     }
     public void startBombShoot()
     {
+        cooldown = 15f;
         StartCoroutine(BombShoot());
     }
     IEnumerator ShieldAlly()  //auf jeden fall noch ändern so funktioniert es nur bedingt und die schüsse fliegen einfach durch, vll weiterer collider als unterobject der die projectiles löscht?
     {
-        ButtonSpez1.SendMessage("SetCooldown", cooldown);
         for(int i = 0; i < allyArray.Length; i++)
         {
             allyArray[i].GetComponent<Collider2D>().enabled = false;
@@ -51,13 +50,16 @@ public class SpecialsMainShip : MonoBehaviour {
             allyArray[i].GetComponent<Collider2D>().enabled = true;
             allyArray[i].transform.GetChild(0).gameObject.SetActive(false);
         }
+        ButtonSpez1.SendMessage("SetCooldown", cooldown);
     }
-
     IEnumerator BombShoot()
     {
-        
-        GameObject Test = Instantiate(testFrame);
-        Test.transform.position = new Vector3(myTrans.position.x, myTrans.position.y + laneHeight * 2, 0);
-        yield return null;
+        shootScript.bombShoot = true;
+        yield return new WaitForSeconds(bombShotDuration);
+        shootScript.bombShoot = false;
+
+        ButtonSpez1.SendMessage("SetCooldown", cooldown);
     }
+
+
 }
