@@ -18,7 +18,7 @@ public class ProjectilBehaviour : MonoBehaviour {
         {
             transform.position += Vector3.up * speed;
         }
-        if (direction == 2)
+        if (direction == -1)
         {
             transform.position += Vector3.down * speed;
         }

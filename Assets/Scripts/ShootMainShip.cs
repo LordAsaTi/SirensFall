@@ -25,27 +25,22 @@ public class ShootMainShip : MonoBehaviour {
 	}
     public void ShootUp()
     {
-        if (bombShoot)
-        {
-            Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y + laneHeight * 2, 0),BombPref.transform.rotation);
-        }
-        else
-        {
-            projectilUp = Instantiate(projectilPref, new Vector3(myTransform.position.x, myTransform.position.y + 0.7f, myTransform.position.z), projectilPref.transform.rotation);
-            projectilUp.SendMessage("SetDirection", 1);
-        }
-       
+        Shoot(1);
     }
     public void ShootDown()
     {
+        Shoot(-1);
+    }
+    void Shoot(int direction)
+    {
         if (bombShoot)
         {
-            Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y - laneHeight * 2, 0), BombPref.transform.rotation);
+            Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y + (laneHeight * direction) * 4, 0), BombPref.transform.rotation);
         }
         else
         {
-            projectilDown = Instantiate(projectilPref, new Vector3(myTransform.position.x, myTransform.position.y - 0.7f, myTransform.position.z), myTransform.rotation);
-            projectilDown.SendMessage("SetDirection", 2);
+            projectilDown = Instantiate(projectilPref, new Vector3(myTransform.position.x, myTransform.position.y + (0.7f * direction), myTransform.position.z), myTransform.rotation);
+            projectilDown.SendMessage("SetDirection", direction);
         }
     }
 }
