@@ -7,7 +7,6 @@ public class SirenBehaviour : MonoBehaviour {
     public float life = 10;
     float maxLife;
     float coolDownInSec = 7f;
-    private float timeStamp = 2.5f;
     bool dead = false;
 
 	// Use this for initialization
@@ -17,12 +16,7 @@ public class SirenBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (dead && timeStamp <= Time.time)
-        {
-            dead = false;
-            life = maxLife;
-            GetComponent<SpriteRenderer>().color = Color.green;
-        }
+
 	}
     public bool getDead()
     {
@@ -42,11 +36,11 @@ public class SirenBehaviour : MonoBehaviour {
     void DmgTaken(float dmg)
     {
         life -= dmg;
-        if(life <= 0)
+        if(life <= 0 && !dead)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
-            timeStamp = Time.time + coolDownInSec;
-            dead = true; 
+            dead = true;
+            StartCoroutine(Dead());
         }
     }
     void Attack(Collider2D coll)
@@ -56,6 +50,13 @@ public class SirenBehaviour : MonoBehaviour {
             coll.gameObject.SendMessage("Attacked");
         }
         
+    }
+    IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(coolDownInSec);
+        dead = false;
+        life = maxLife;
+        GetComponent<SpriteRenderer>().color = Color.green;
     }
 
 

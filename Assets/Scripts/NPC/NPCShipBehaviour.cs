@@ -41,11 +41,16 @@ public class NPCShipBehaviour : MonoBehaviour {
     {
         go = false;
         GetComponent<SpriteRenderer>().color = Color.red;
+        StartCoroutine(Despawn());
     }
     public float getPointValue()
     {
         return pointValue;
     }
-
+    IEnumerator Despawn()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(this.gameObject);
+    }
 
 }
