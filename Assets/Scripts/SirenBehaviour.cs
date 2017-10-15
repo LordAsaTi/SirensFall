@@ -51,7 +51,11 @@ public class SirenBehaviour : MonoBehaviour {
     }
     void Attack(Collider2D coll)
     {
-        coll.gameObject.SendMessage("Attacked");
+        if(coll.gameObject.tag == "Ally")
+        {
+            coll.gameObject.SendMessage("Attacked");
+        }
+        
     }
 
 

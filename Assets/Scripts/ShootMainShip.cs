@@ -35,7 +35,7 @@ public class ShootMainShip : MonoBehaviour {
     {
         if (bombShoot)
         {
-            Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y + (laneHeight * direction) * 4, 0), BombPref.transform.rotation);
+            Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y + (laneHeight * direction) * 4, -1), BombPref.transform.rotation);
         }
         else
         {

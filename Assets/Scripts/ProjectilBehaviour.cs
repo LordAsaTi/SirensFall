@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectilBehaviour : MonoBehaviour {
 
-    int direction = 0; // 1 = up | 2 = down
+    int direction = 0; // 1 = up | -1 = down
     float speed = 0.3f;
     float dmg = 1;
 	// Use this for initialization
