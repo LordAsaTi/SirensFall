@@ -8,10 +8,10 @@ public class NPCShipBehaviour : MonoBehaviour {
 
     bool go = false;
     public float speed = 0.01f;
-    Vector3 startTrans;
+    //Vector3 startTrans;
 	// Use this for initialization
 	void Start () {
-        startTrans = transform.position;
+        //startTrans = transform.position;
 
 	}
 	
