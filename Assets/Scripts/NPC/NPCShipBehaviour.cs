@@ -22,9 +22,10 @@ public class NPCShipBehaviour : MonoBehaviour {
             transform.position += new Vector3(1 * speed, 0, 0);
         }
 	}
-    public void Move()
+    public void Move(float speed)
     {
         //transform.position = startTrans;//new Vector3(-11, 2.7f, 0);
+        this.speed = speed;
         go = true;
     }
     void OnTriggerEnter2D(Collider2D coll)

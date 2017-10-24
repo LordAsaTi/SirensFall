@@ -6,9 +6,11 @@ public class SpawnNPCShips : MonoBehaviour {
 
     public GameObject prefShip;
     Vector3[] laneVector = new Vector3[5]; // the white ones
+    public float shipSpeed = 0.01f;
     public float timeBetweenSpawns;
     public int[] spawnArray;   //<- hier die Schiffposition eintragen.
     public bool spawnedAll = false;
+    
     
 
     SpecialsMainShip specialsScript;
@@ -38,7 +40,7 @@ public class SpawnNPCShips : MonoBehaviour {
     public void SpawnShip(int lane)
     {
         GameObject ship = Instantiate(prefShip, laneVector[lane],this.transform.rotation ,this.transform);
-        ship.SendMessage("Move");
+        ship.SendMessage("Move",shipSpeed);
         specialsScript.SendMessage("UpdateAllyArray");
     }
     IEnumerator ShipSpawning()
