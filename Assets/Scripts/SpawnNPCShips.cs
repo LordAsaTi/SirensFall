@@ -5,8 +5,9 @@ using UnityEngine;
 public class SpawnNPCShips : MonoBehaviour {
 
     public GameObject prefShip;
+    public GameObject attentionTri;
     Vector3[] laneVector = new Vector3[5]; // the white ones
-    public float shipSpeed = 0.01f;
+    public float shipSpeed = 0.5f;
     public float timeBetweenSpawns;
     public int[] spawnArray;   //<- hier die Schiffposition eintragen.
     public bool spawnedAll = false;
@@ -42,6 +43,13 @@ public class SpawnNPCShips : MonoBehaviour {
         GameObject ship = Instantiate(prefShip, laneVector[lane],this.transform.rotation ,this.transform);
         ship.SendMessage("Move",shipSpeed);
         specialsScript.SendMessage("UpdateAllyArray");
+        StartCoroutine(SpawnTriangle(lane));
+    }
+    IEnumerator SpawnTriangle(int lane)
+    {
+        GameObject triangle = Instantiate(attentionTri,new Vector3(attentionTri.transform.position.x, laneVector[lane].y, 0), this.transform.rotation, this.transform);
+        yield return new WaitForSeconds(1f);
+        Destroy(triangle);
     }
     IEnumerator ShipSpawning()
     {
