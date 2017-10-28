@@ -15,7 +15,7 @@ public class SpecialsMainShip : MonoBehaviour {
     // Use this for initialization
     void Start () {
         ButtonSpez1 = GameObject.Find("Button Spezial 1");
-        ButtonSpez1 = GameObject.Find("Button Spezial 2");
+        ButtonSpez2 = GameObject.Find("Button Spezial 2");
         shootScript = GetComponent<ShootMainShip>();
     }
 	
@@ -58,7 +58,7 @@ public class SpecialsMainShip : MonoBehaviour {
         yield return new WaitForSeconds(bombShotDuration);
         shootScript.bombShoot = false;
 
-        ButtonSpez1.SendMessage("SetCooldown", cooldown);
+        ButtonSpez2.SendMessage("SetCooldown", cooldown);
     }
 
 

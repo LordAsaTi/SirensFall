@@ -7,7 +7,7 @@ public class NPCShipBehaviour : MonoBehaviour {
     float pointValue = 1;
 
     bool go = false;
-    public float speed = 0.01f;
+    public float speed = 0.5f;
     //Vector3 startTrans;
 	// Use this for initialization
 	void Start () {
@@ -19,12 +19,13 @@ public class NPCShipBehaviour : MonoBehaviour {
 	void Update () {
         if (go)
         {
-            transform.position += new Vector3(1 * speed, 0, 0);
+            transform.position += new Vector3(1 * speed * Time.deltaTime, 0, 0);
         }
 	}
-    public void Move()
+    public void Move(float speed)
     {
         //transform.position = startTrans;//new Vector3(-11, 2.7f, 0);
+        this.speed = speed;
         go = true;
     }
     void OnTriggerEnter2D(Collider2D coll)
