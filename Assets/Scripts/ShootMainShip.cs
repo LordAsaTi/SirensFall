@@ -12,12 +12,14 @@ public class ShootMainShip : MonoBehaviour {
     GameObject projectilDown;
     Transform myTransform;
     float laneHeight;
+    Animator animator;
 
     void Start () {
         myTransform = GetComponent<Transform>();
         laneHeight = (Camera.main.orthographicSize * 2f) / 10;
         bombShoot = false;
-	}
+        animator = GetComponent<Animator>();
+    }
 	
 
 	void Update () {
@@ -41,6 +43,7 @@ public class ShootMainShip : MonoBehaviour {
         {
             projectilDown = Instantiate(projectilPref, new Vector3(myTransform.position.x, myTransform.position.y + (0.7f * direction), myTransform.position.z), myTransform.rotation);
             projectilDown.SendMessage("SetDirection", direction);
+            animator.SetTrigger("ShootUp");
         }
     }
 }
