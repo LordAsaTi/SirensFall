@@ -12,13 +12,15 @@ public class ShootMainShip : MonoBehaviour {
     GameObject projectilDown;
     Transform myTransform;
     float laneHeight;
-    Animator animator;
+    Animator animatorUp;
+    Animator animatorDown;
 
     void Start () {
         myTransform = GetComponent<Transform>();
         laneHeight = (Camera.main.orthographicSize * 2f) / 10;
         bombShoot = false;
-        animator = GetComponent<Animator>();
+        animatorUp = transform.GetChild(1).GetComponent<Animator>();
+        animatorDown = transform.GetChild(2).GetComponent<Animator>();
     }
 	
 
@@ -43,7 +45,10 @@ public class ShootMainShip : MonoBehaviour {
         {
             projectilDown = Instantiate(projectilPref, new Vector3(myTransform.position.x, myTransform.position.y + (0.7f * direction), myTransform.position.z), myTransform.rotation);
             projectilDown.SendMessage("SetDirection", direction);
-            animator.SetTrigger("ShootUp");
+            if(direction == -1)
+                animatorDown.SetTrigger("ShootUp");
+            else
+                animatorUp.SetTrigger("ShootUp");
         }
     }
 }
