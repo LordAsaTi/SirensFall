@@ -7,9 +7,11 @@ public class SpecialsMainShip : MonoBehaviour {
     GameObject[] allyArray;
     float shieldDuration = 5f;
     float bombShotDuration = 5f;
+    float mortarStartTime = 1f;
     float cooldown;
     GameObject ButtonSpez1;
     GameObject ButtonSpez2;
+    public GameObject MortarPref;
     ShootMainShip shootScript;
 
     // Use this for initialization
@@ -21,21 +23,27 @@ public class SpecialsMainShip : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
     void UpdateAllyArray() //get called every spawn;
     {
         allyArray = GameObject.FindGameObjectsWithTag("Ally");
     }
-    public void startShield()
+    public void StartShield()
     {
         cooldown = 10f;
         StartCoroutine("ShieldAlly");
     }
-    public void startBombShoot()
+    public void StartBombShoot()
     {
         cooldown = 15f;
         StartCoroutine(BombShoot());
+    }
+    public void StartMortar()
+    {
+        cooldown = 200f;
+        StartCoroutine(MortarShoot());
+
     }
     IEnumerator ShieldAlly()  //auf jeden fall noch ändern so funktioniert es nur bedingt und die schüsse fliegen einfach durch, vll weiterer collider als unterobject der die projectiles löscht?
     {
@@ -59,6 +67,31 @@ public class SpecialsMainShip : MonoBehaviour {
         shootScript.bombShoot = false;
 
         ButtonSpez2.SendMessage("SetCooldown", cooldown);
+    }
+    IEnumerator MortarShoot()
+    {
+
+#if UNITY_EDITOR
+        while (!Input.GetMouseButtonDown(0))
+        {
+            yield return null;
+        }
+
+        Vector3 posi = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+#else
+        
+        while(Input.touchCount == 0 || (Input.GetTouch(0).phase != TouchPhase.Began))
+        {
+            yield return null;
+        }
+        Vector3 posi = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+#endif
+        //hier Schuss start Animation
+        yield return new WaitForSeconds(mortarStartTime);
+        Instantiate(MortarPref,new Vector3(posi.x, posi.y, 0) , new Quaternion(0, 0, 0, 0));
+
+       
+       
     }
 
 
