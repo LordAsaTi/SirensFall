@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpecialsMainShip : MonoBehaviour {
 
@@ -13,11 +14,32 @@ public class SpecialsMainShip : MonoBehaviour {
     GameObject ButtonSpez2;
     public GameObject MortarPref;
     ShootMainShip shootScript;
+    string spezName1 = "spezial1";
+    string spezName2 = "spezial2";
 
     // Use this for initialization
     void Start () {
         ButtonSpez1 = GameObject.Find("Button Spezial 1");
         ButtonSpez2 = GameObject.Find("Button Spezial 2");
+
+        if (PlayerPrefs.HasKey(spezName1))
+        {
+            ButtonSpez1.GetComponent<Button>().onClick.AddListener(delegate { SpezialSelect(PlayerPrefs.GetInt(spezName1)); });
+        }
+        else
+        {
+            PlayerPrefs.SetInt(spezName1, 1);
+        }
+        if (PlayerPrefs.HasKey(spezName2))
+        {
+            ButtonSpez2.GetComponent<Button>().onClick.AddListener(delegate { SpezialSelect(PlayerPrefs.GetInt(spezName2)); });
+        }
+        else
+        {
+            PlayerPrefs.SetInt(spezName2, 2);
+        }
+
+
         shootScript = GetComponent<ShootMainShip>();
     }
 	
@@ -45,6 +67,39 @@ public class SpecialsMainShip : MonoBehaviour {
         StartCoroutine(MortarShoot());
 
     }
+    public void SpezialSelect(int number)
+    {
+        switch (number)
+        {
+            case 1:
+                StartShield();
+                break;
+            case 2:
+                StartBombShoot();
+                break;
+            case 3:
+                StartMortar();
+                break;
+            default:
+                Debug.Log("false Input");
+                break;
+        }
+    }
+    void CooldownSetting(int type, float coolDown)
+    {
+        if(type == PlayerPrefs.GetInt(spezName1))
+        {
+            ButtonSpez1.SendMessage("SetCooldown", coolDown);
+        }
+        else if (type == PlayerPrefs.GetInt(spezName2))
+        {
+            ButtonSpez2.SendMessage("SetCooldown", coolDown);
+        }
+        else
+        {
+            Debug.Log("invalid SpezialNumber: " + type);
+        }
+    }
     IEnumerator ShieldAlly()  //auf jeden fall noch ändern so funktioniert es nur bedingt und die schüsse fliegen einfach durch, vll weiterer collider als unterobject der die projectiles löscht?
     {
         for(int i = 0; i < allyArray.Length; i++)
@@ -58,7 +113,7 @@ public class SpecialsMainShip : MonoBehaviour {
             allyArray[i].GetComponent<Collider2D>().enabled = true;
             allyArray[i].transform.GetChild(0).gameObject.SetActive(false);
         }
-        ButtonSpez1.SendMessage("SetCooldown", cooldown);
+        CooldownSetting(1, cooldown);
     }
     IEnumerator BombShoot()
     {
@@ -66,7 +121,7 @@ public class SpecialsMainShip : MonoBehaviour {
         yield return new WaitForSeconds(bombShotDuration);
         shootScript.bombShoot = false;
 
-        ButtonSpez2.SendMessage("SetCooldown", cooldown);
+        CooldownSetting(2, cooldown);
     }
     IEnumerator MortarShoot()
     {
@@ -89,7 +144,7 @@ public class SpecialsMainShip : MonoBehaviour {
         //hier Schuss start Animation
         yield return new WaitForSeconds(mortarStartTime);
         Instantiate(MortarPref,new Vector3(posi.x, posi.y, 0) , new Quaternion(0, 0, 0, 0));
-
+        CooldownSetting(3, cooldown);
        
        
     }
