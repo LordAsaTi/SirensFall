@@ -7,29 +7,22 @@ public class PlayerSettings : MonoBehaviour {
 
     public GameObject OptionsMenu;
 
-    public GameObject spezial1Zone;
-    public GameObject spezial2Zone;
-    public GameObject buttonPref;
+    public GameObject special1Zone;
+    public GameObject special2Zone;
+    public GameObject specialPref;
     public GameObject choiceContentPanel;
-    public string[] spezialsName;
-
-    void AddChoice(string choiceName, UnityEngine.Events.UnityAction method)
-    {
-        GameObject button = Instantiate(buttonPref, choiceContentPanel.transform);
-        button.GetComponent<ButtonPrefabScript>().label.text = choiceName;
-        button.GetComponent<Button>().onClick.AddListener(method);
-    }
+    public Sprite[] specialImages;
+    public string[] specialsName;
+    
     public void CreateChoices()
     {
-        for(int i = 0; i < spezialsName.Length; i++)
+        for(int i = 0; i < specialsName.Length; i++)
         {
-            AddChoice(spezialsName[i], ButtonAktion);
+            GameObject specialPanel = Instantiate(specialPref, choiceContentPanel.transform.GetChild(i));
+            specialPanel.transform.GetChild(0).GetComponent<Image>().sprite = specialImages[i];
+            specialPanel.GetComponentInChildren<Text>().text = specialsName[i];
         }
         
-    }
-    void ButtonAktion()
-    {
-        Debug.Log("Peng");
     }
     public void Activate()
     {

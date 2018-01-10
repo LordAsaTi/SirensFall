@@ -17,22 +17,22 @@ public class DragHandling : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         item = gameObject;
         startPosition = transform.position;
         startParent = transform.parent;
-        //GetComponent<CanvasGroup>().blocksRaycasts = false;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         //item.GetComponent<LayoutElement>().ignoreLayout = true;
-        item.transform.SetParent(item.transform.parent.parent);
     }
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Input.mousePosition;
+        transform.position = Input.mousePosition;       //muss für touch funktionieren
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        //collider abfage; und parent setzen
         item = null;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         if (transform.parent == startParent)
         {
             transform.position = startPosition;
         }
-        //GetComponent<CanvasGroup>().blocksRaycasts = true;
         //item.GetComponent<LayoutElement>().ignoreLayout = false;
     }
 }
