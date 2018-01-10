@@ -19,11 +19,11 @@ public class SpawnNPCShips : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        laneVector[0] = new Vector3(-10.5f, 6.14f, 0);
-        laneVector[1] = new Vector3(-10.5f, 4.16f, 0);
-        laneVector[2] = new Vector3(-10.5f, 2.1f, 0);
-        laneVector[3] = new Vector3(-10.5f, 0.15f, 0);
-        laneVector[4] = new Vector3(-10.5f, -1.85f, 0);
+        laneVector[0] = new Vector3(-10.5f, 5.64f, 0);
+        laneVector[1] = new Vector3(-10.5f, 3.66f, 0);
+        laneVector[2] = new Vector3(-10.5f, 1.65f, 0);
+        laneVector[3] = new Vector3(-10.5f, -0.35f, 0);
+        laneVector[4] = new Vector3(-10.5f, -2.35f, 0);
 
         specialsScript = FindObjectOfType<SpecialsMainShip>();
         StartCoroutine(ShipSpawning());
