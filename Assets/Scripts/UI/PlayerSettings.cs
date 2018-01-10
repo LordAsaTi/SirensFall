@@ -9,26 +9,20 @@ public class PlayerSettings : MonoBehaviour {
 
     public GameObject special1Zone;
     public GameObject special2Zone;
-    public GameObject specialPref;
+    public GameObject[] specialPref;
     public GameObject choiceContentPanel;
-    public Sprite[] specialImages;
-    public string[] specialsName;
     
     private void CreateChoices()
     {
-        for(int i = 0; i < specialsName.Length; i++)
+        for(int i = 0; i < specialPref.Length; i++)
         {
-            GameObject specialPanel = Instantiate(specialPref, choiceContentPanel.transform.GetChild(i));
-            specialPanel.transform.GetChild(0).GetComponent<Image>().sprite = specialImages[i];
-            specialPanel.GetComponentInChildren<Text>().text = specialsName[i];
+            Instantiate(specialPref[i], choiceContentPanel.transform.GetChild(i));
         }
-        
     }
     private void EraseChoices()
     {
         for (int i = 0; i < choiceContentPanel.transform.childCount; i++)
         {
-            Debug.Log(i);
             if (choiceContentPanel.transform.GetChild(i).transform.childCount > 0)
             {
                 Destroy(choiceContentPanel.transform.GetChild(i).transform.GetChild(0).gameObject);
@@ -45,6 +39,13 @@ public class PlayerSettings : MonoBehaviour {
     public void Close()
     {
         EraseChoices();
+        if(special1Zone.transform.childCount > 0 && special2Zone.transform.childCount > 0)
+        {
+            PlayerPrefs.SetInt("spezial1", special1Zone.transform.GetChild(0).GetComponent<SpecialPropertyScript>().indexNumber);
+            PlayerPrefs.SetInt("spezial2", special2Zone.transform.GetChild(0).GetComponent<SpecialPropertyScript>().indexNumber);
+
+        }
         OptionsMenu.SetActive(false);
+
     }
 }

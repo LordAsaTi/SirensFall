@@ -28,7 +28,7 @@ public class SpecialsMainShip : MonoBehaviour {
         }
         else
         {
-            PlayerPrefs.SetInt(spezName1, 1);
+            PlayerPrefs.SetInt(spezName1, 0);
         }
         if (PlayerPrefs.HasKey(spezName2))
         {
@@ -36,17 +36,13 @@ public class SpecialsMainShip : MonoBehaviour {
         }
         else
         {
-            PlayerPrefs.SetInt(spezName2, 2);
+            PlayerPrefs.SetInt(spezName2, 1);
         }
 
 
         shootScript = GetComponent<ShootMainShip>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-
-	}
     void UpdateAllyArray() //get called every spawn;
     {
         allyArray = GameObject.FindGameObjectsWithTag("Ally");
@@ -71,13 +67,13 @@ public class SpecialsMainShip : MonoBehaviour {
     {
         switch (number)
         {
-            case 1:
+            case 0:
                 StartShield();
                 break;
-            case 2:
+            case 1:
                 StartBombShoot();
                 break;
-            case 3:
+            case 2:
                 StartMortar();
                 break;
             default:
