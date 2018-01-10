@@ -14,7 +14,7 @@ public class PlayerSettings : MonoBehaviour {
     public Sprite[] specialImages;
     public string[] specialsName;
     
-    public void CreateChoices()
+    private void CreateChoices()
     {
         for(int i = 0; i < specialsName.Length; i++)
         {
@@ -24,9 +24,27 @@ public class PlayerSettings : MonoBehaviour {
         }
         
     }
+    private void EraseChoices()
+    {
+        for (int i = 0; i < choiceContentPanel.transform.childCount; i++)
+        {
+            Debug.Log(i);
+            if (choiceContentPanel.transform.GetChild(i).transform.childCount > 0)
+            {
+                Destroy(choiceContentPanel.transform.GetChild(i).transform.GetChild(0).gameObject);
+
+            }
+        }
+    }
+
     public void Activate()
     {
         OptionsMenu.SetActive(true);
         CreateChoices();
+    }
+    public void Close()
+    {
+        EraseChoices();
+        OptionsMenu.SetActive(false);
     }
 }
