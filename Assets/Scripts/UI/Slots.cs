@@ -17,9 +17,13 @@ public class Slots : MonoBehaviour , IDropHandler
     #region IdropHandler implementation 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("ondrop");
        if (!item)
         {
+            DragHandling.item.transform.SetParent(transform);
+        }
+       else
+        {
+            transform.GetChild(0).SetParent(DragHandling.item.transform.parent);
             DragHandling.item.transform.SetParent(transform);
         }
     }
