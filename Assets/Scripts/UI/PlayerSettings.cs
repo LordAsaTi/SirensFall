@@ -16,9 +16,22 @@ public class PlayerSettings : MonoBehaviour {
     {
         for(int i = 0; i < specialPref.Length; i++)
         {
-            Instantiate(specialPref[i], choiceContentPanel.transform.GetChild(i));
+            if(i == PlayerPrefs.GetInt("spezial1"))
+            {
+                Instantiate(specialPref[i], special1Zone.transform);
+            }
+            else if (i == PlayerPrefs.GetInt("spezial2"))
+            {
+                Instantiate(specialPref[i], special2Zone.transform);
+            }
+            else
+            {
+                Instantiate(specialPref[i], choiceContentPanel.transform.GetChild(i));
+            }
+            
         }
     }
+
     private void EraseChoices()
     {
         for (int i = 0; i < choiceContentPanel.transform.childCount; i++)
@@ -28,6 +41,14 @@ public class PlayerSettings : MonoBehaviour {
                 Destroy(choiceContentPanel.transform.GetChild(i).transform.GetChild(0).gameObject);
 
             }
+        }
+        if(special1Zone.transform.childCount > 0)
+        {
+            Destroy(special1Zone.transform.GetChild(0).gameObject);
+        }
+        if (special2Zone.transform.childCount > 0)
+        {
+            Destroy(special2Zone.transform.GetChild(0).gameObject);
         }
     }
 
