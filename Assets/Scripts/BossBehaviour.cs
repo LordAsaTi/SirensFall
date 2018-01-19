@@ -10,6 +10,7 @@ public class BossBehaviour : MonoBehaviour {
     float coolDownInSec = 7f;
     bool dead = false;
     bool shooting = false;
+    bool canShoot = true;
     bool goingRight = true;
     public int phase = 1;
     int direction = -1;
@@ -54,21 +55,10 @@ public class BossBehaviour : MonoBehaviour {
         StartCoroutine(ShootSalve());
         while(phase == 1)
         {
-            if (goingRight && transform.position.x < 6.8)
-            {
-                rigi.AddForce(new Vector2(1 * speed, 0));
-            }
-            else if (!goingRight && transform.position.x > -7.6)
-            {
-                rigi.AddForce(new Vector2(-1 * speed, 0));
-            }
-            else
-            {
-                goingRight = !goingRight;
-            }
-            
+            Moving();
             yield return null;
         }
+        canShoot = false;
         
         StartCoroutine(PhaseTwo());
         yield return null;
@@ -78,14 +68,36 @@ public class BossBehaviour : MonoBehaviour {
     {
         moveZones.StartMove();
         shooting = false;
-        //Camera.main.GetComponent<Rigidbody>().AddForce(Vector3.down * 100);
+        direction = 1;
+
+        while (moveZones.getIsMoving())
+        {
+            yield return null;
+        }
         rigi.drag = 0;
         rigi.AddForce(new Vector2(-1 * 100, 0));
         while(transform.position.x > -13)
         {
             yield return null;
         }
-        rigi.drag = 100;
+        rigi.velocity = Vector2.zero;
+        transform.position = new Vector3(transform.position.x, -4.4f, 0);
+        rigi.AddForce(Vector2.right * 150);
+        while(transform.position.x < player.transform.position.x)
+        {
+            yield return null;
+        }
+        rigi.velocity = Vector2.zero;
+
+        speed = 3;
+        rigi.drag = 4;
+        canShoot = true;
+        StartCoroutine(ShootSalve());
+        while(phase == 2)
+        {
+            Moving();
+            yield return null;
+        }
         yield return null;
     }
     void DmgTaken(float dmg)
@@ -116,13 +128,38 @@ public class BossBehaviour : MonoBehaviour {
     }
     IEnumerator ShootSalve()
     {
-        while (phase == 1)
+        while (canShoot)
         {
-            yield return new WaitForSeconds(2f);
+            if (phase == 1)
+            {
+                yield return new WaitForSeconds(2f); 
+            }
+            if(phase == 2)
+            {
+                yield return new WaitForSeconds(1.5f);
+            }
             shooting = !shooting;
         }
-        shooting = false;
         
+
+        shooting = false;
+
+
+    }
+    void Moving()
+    {
+        if (goingRight && transform.position.x < 6.8)
+        {
+            rigi.AddForce(new Vector2(1 * speed, 0));
+        }
+        else if (!goingRight && transform.position.x > -7.6)
+        {
+            rigi.AddForce(new Vector2(-1 * speed, 0));
+        }
+        else
+        {
+            goingRight = !goingRight;
+        }
     }
     IEnumerator Shoot()
     {

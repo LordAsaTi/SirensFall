@@ -72,4 +72,8 @@ public class MoveZones : MonoBehaviour {
             StartCoroutine(MoveY(1));
         }
     }
+    public bool getIsMoving()
+    {
+        return isMoving;
+    }
 }
