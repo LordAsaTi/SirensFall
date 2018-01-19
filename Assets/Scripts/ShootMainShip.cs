@@ -8,7 +8,6 @@ public class ShootMainShip : MonoBehaviour {
     public GameObject BombPref;
     [HideInInspector]
     public bool bombShoot;
-    GameObject projectilUp;
     GameObject projectilDown;
     Transform myTransform;
     float laneHeight;

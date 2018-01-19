@@ -7,6 +7,7 @@ public class MovingMainShip : MonoBehaviour {
     Transform trans;
 
     float speed = 2f;
+    public bool bossfight = false;
     bool activeR;
     bool activeL;
     bool facingRight = true;
@@ -71,9 +72,13 @@ public class MovingMainShip : MonoBehaviour {
     }
     void FlipH()
     {
-        facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        if (!bossfight)
+        {
+            facingRight = !facingRight;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+        }
+
     }
 }
