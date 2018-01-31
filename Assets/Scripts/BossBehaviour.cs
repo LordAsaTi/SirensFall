@@ -5,7 +5,10 @@ using UnityEngine;
 public class BossBehaviour : MonoBehaviour {
 
     public float life = 100;
+    public int maxPhase = 3;
     public GameObject projectilPref;
+    public MoveZones moveZones;
+
     float maxLife;
     float coolDownInSec = 7f;
     bool dead = false;
@@ -15,7 +18,7 @@ public class BossBehaviour : MonoBehaviour {
     public int phase = 1;
     int direction = -1;
     int speed = 2;
-    public MoveZones moveZones;
+    
     GameObject player;
     Rigidbody2D rigi;
 
@@ -137,6 +140,10 @@ public class BossBehaviour : MonoBehaviour {
             if(phase == 2)
             {
                 yield return new WaitForSeconds(1.5f);
+            }
+            if(phase == 3)
+            {
+                yield return new WaitForSeconds(1f);
             }
             shooting = !shooting;
         }
