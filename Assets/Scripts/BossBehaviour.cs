@@ -8,6 +8,7 @@ public class BossBehaviour : MonoBehaviour {
     public int maxPhase = 3;
     public GameObject projectilPref;
     public MoveZones moveZones;
+    public EndScreen endscreenScript;
 
     float maxLife;
     float coolDownInSec = 7f;
@@ -73,10 +74,6 @@ public class BossBehaviour : MonoBehaviour {
         shooting = false;
         direction = 1;
 
-        while (moveZones.getIsMoving())
-        {
-            yield return null;
-        }
         rigi.drag = 0;
         rigi.AddForce(new Vector2(-1 * 100, 0));
         while(transform.position.x > -13)
@@ -84,6 +81,10 @@ public class BossBehaviour : MonoBehaviour {
             yield return null;
         }
         rigi.velocity = Vector2.zero;
+        while (moveZones.getIsMoving())
+        {
+            yield return null;
+        }
         transform.position = new Vector3(transform.position.x, -4.4f, 0);
         rigi.AddForce(Vector2.right * 150);
         while(transform.position.x < player.transform.position.x)
@@ -101,7 +102,46 @@ public class BossBehaviour : MonoBehaviour {
             Moving();
             yield return null;
         }
+        StartCoroutine(PhaseThree());
         yield return null;
+    }
+    IEnumerator PhaseThree()
+    {
+        canShoot = false;
+        moveZones.StartMove();
+        shooting = false;
+        direction = -1;
+
+        
+        rigi.drag = 0;
+        rigi.AddForce(new Vector2(-1 * 100, 0));
+        while (transform.position.x > -13)
+        {
+            yield return null;
+        }
+        yield return null;
+
+        while (moveZones.getIsMoving())
+        {
+            yield return null;
+        }
+        rigi.velocity = Vector3.zero;
+        transform.position = new Vector3(player.transform.position.x, 7.5f, 0);
+        rigi.AddForce(new Vector2(0, -1 * 20));
+        while (transform.position.y > 4)
+        {
+            yield return null;
+        }
+        rigi.drag = 4;
+        yield return new WaitForSeconds(0.5f);
+        canShoot = true;
+        StartCoroutine(ShootSalve());
+        while (phase == 3)
+        {
+            CopyMovement();
+            yield return null;
+        }
+
     }
     void DmgTaken(float dmg)
     {
@@ -145,6 +185,11 @@ public class BossBehaviour : MonoBehaviour {
             {
                 yield return new WaitForSeconds(1f);
             }
+            if(phase > maxPhase)
+            {
+                canShoot = false;
+                EndScreen();
+            }
             shooting = !shooting;
         }
         
@@ -167,6 +212,21 @@ public class BossBehaviour : MonoBehaviour {
         {
             goingRight = !goingRight;
         }
+    }
+    void CopyMovement()
+    {
+        if(player.transform.position.x > transform.position.x)
+        {
+            rigi.AddForce(new Vector2(1 * speed, 0));
+        }
+        else if(player.transform.position.x < transform.position.x)
+        {
+            rigi.AddForce(new Vector2(-1 * speed, 0));
+        }
+    }
+    void EndScreen()
+    {
+        endscreenScript.ShowEndscreen();
     }
     IEnumerator Shoot()
     {
