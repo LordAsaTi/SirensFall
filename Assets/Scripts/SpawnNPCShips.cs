@@ -6,6 +6,8 @@ public class SpawnNPCShips : MonoBehaviour {
 
     public GameObject prefShip;
     public GameObject attentionTri;
+    public EndScreen endscreen;
+
     Vector3[] laneVector = new Vector3[5]; // the white ones
     public float shipSpeed = 0.5f;
     public float timeBetweenSpawns;
@@ -25,6 +27,7 @@ public class SpawnNPCShips : MonoBehaviour {
         laneVector[3] = new Vector3(-10.5f, -0.35f, 0);
         laneVector[4] = new Vector3(-10.5f, -2.35f, 0);
 
+        
         specialsScript = FindObjectOfType<SpecialsMainShip>();
         StartCoroutine(ShipSpawning());
     }
@@ -42,6 +45,9 @@ public class SpawnNPCShips : MonoBehaviour {
     {
         GameObject ship = Instantiate(prefShip, laneVector[lane],this.transform.rotation ,this.transform);
         ship.SendMessage("Move",shipSpeed);
+        ship.SendMessage("SetPointValue", 1);
+
+        endscreen.AddMaxPoints(ship.GetComponent<NPCShipBehaviour>().getPointValue());
         specialsScript.SendMessage("UpdateAllyArray");
         StartCoroutine(SpawnTriangle(lane));
     }

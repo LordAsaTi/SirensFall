@@ -48,6 +48,10 @@ public class NPCShipBehaviour : MonoBehaviour {
     {
         return pointValue;
     }
+    public void SetPointValue(float value)
+    {
+        pointValue = value;
+    }
     IEnumerator Despawn()
     {
         yield return new WaitForSeconds(1);

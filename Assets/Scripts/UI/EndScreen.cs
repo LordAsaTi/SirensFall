@@ -10,6 +10,7 @@ public class EndScreen : MonoBehaviour {
     Text score;
     Text highScore;
     string highScoreName;
+    float maxPoints;
 
 	void Start () {
         score = UIOver.transform.GetChild(4).GetComponent<Text>();
@@ -37,4 +38,24 @@ public class EndScreen : MonoBehaviour {
         }
         highScore.text += PlayerPrefs.GetFloat(highScoreName).ToString();
     }
+    int CalculateStars()
+    {
+        if(PlayerPrefs.GetFloat("Points") == maxPoints)
+        {
+            return 3;
+        }
+        else if(PlayerPrefs.GetFloat("Points") > maxPoints / 2)
+        {
+            return 2;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    public void AddMaxPoints(float toAdd)
+    {
+        maxPoints += toAdd;
+    }
+
 }
