@@ -9,12 +9,13 @@ public class EndScreen : MonoBehaviour {
     public GameObject UIOver;
     Text score;
     Text highScore;
+    Image starFilling;
     string highScoreName;
     float maxPoints;
-
 	void Start () {
-        score = UIOver.transform.GetChild(4).GetComponent<Text>();
-        highScore = UIOver.transform.GetChild(5).GetComponent<Text>();
+        score = UIOver.transform.GetChild(2).GetComponent<Text>();
+        highScore = UIOver.transform.GetChild(3).GetComponent<Text>();
+        starFilling = UIOver.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
         highScoreName = SceneManager.GetActiveScene().name + "_High"; //Example Level_1_High
     }
 	
@@ -24,6 +25,8 @@ public class EndScreen : MonoBehaviour {
     {
         score.text += PlayerPrefs.GetFloat("Points").ToString();
         UIOver.SetActive(true);
+
+        StartCoroutine(FillStars());
         //Sternanimation hier
         if(PlayerPrefs.HasKey(highScoreName))
         {
@@ -38,24 +41,18 @@ public class EndScreen : MonoBehaviour {
         }
         highScore.text += PlayerPrefs.GetFloat(highScoreName).ToString();
     }
-    int CalculateStars()
-    {
-        if(PlayerPrefs.GetFloat("Points") == maxPoints)
-        {
-            return 3;
-        }
-        else if(PlayerPrefs.GetFloat("Points") > maxPoints / 2)
-        {
-            return 2;
-        }
-        else
-        {
-            return 1;
-        }
-    }
+   
     public void AddMaxPoints(float toAdd)
     {
         maxPoints += toAdd;
+    }
+    IEnumerator FillStars()
+    {
+        for (float i = 0; i < (PlayerPrefs.GetFloat("Points") / maxPoints); i += 0.1f)
+        {
+            starFilling.fillAmount = i;
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
 }
