@@ -7,7 +7,11 @@ public class TutorialScript : MonoBehaviour {
 
     public GameObject[] lanes;
     public GameObject tutStuff;
+    [TextArea]
     public string[] tutorialMessage;
+    public GameObject shootUpZone;
+    public GameObject shootDownZone;
+    public GameObject enemy;
     Image[] arrows;
     int indexText;
     Text tutText;
@@ -15,9 +19,12 @@ public class TutorialScript : MonoBehaviour {
     ShootMainShip shootScript;
     SpawnNPCShips npcScript;
     bool next;
+    bool npcDead;
 
 	void Start () {
         playerShip = GameObject.FindGameObjectWithTag("Player");
+        shootUpZone.SetActive(false);
+        shootDownZone.SetActive(false);
         shootScript = playerShip.GetComponent<ShootMainShip>();
         shootScript.enabled = false;
         npcScript = GetComponent<SpawnNPCShips>();
@@ -29,6 +36,7 @@ public class TutorialScript : MonoBehaviour {
         }
 
         next = false;
+        npcDead = false;
         indexText = 0;
         StartCoroutine(Tut1());
 
@@ -36,6 +44,10 @@ public class TutorialScript : MonoBehaviour {
     public void pressedText()
     {
         next = true;
+    }
+    public void npcDied()
+    {
+        npcDead = true;
     }
     IEnumerator Tut1()
     {
@@ -76,7 +88,7 @@ public class TutorialScript : MonoBehaviour {
         next = false;
         tutText.text = tutorialMessage[indexText];
         indexText++;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         for(int i = 0; i < lanes.Length; i++)//show all Lanes
         {
@@ -87,20 +99,58 @@ public class TutorialScript : MonoBehaviour {
             yield return null;
         }
         next = false;
-
-        shootScript.enabled = true; // erkläre schießen
-
+        tutText.text = tutorialMessage[indexText];
+        indexText++;
+        for (int i = 0; i < lanes.Length; i++)//hide all Lanes
+        {
+            lanes[i].SetActive(false);
+        }
+        while (!next)
+        {
+            yield return null;
+        }
+        next = false;
 
         npcScript.enabled = true;//starte NPC Ship
-        shootScript.enabled = false;
-        Time.timeScale = 0; //sobald in linie mit spieler
-        //erkläre 
-
-        shootScript.enabled = true;
-        //lass spieler npc ship abschießen 
+        yield return new WaitForSeconds(1);
+        NPCShipBehaviour npcBehaviour = GameObject.FindWithTag("Ally").GetComponent<NPCShipBehaviour>();
+        yield return new WaitForSeconds(11);
+        npcBehaviour.SetGo();       //NPCSchiff stoppt
 
 
-        Time.timeScale = 1;
+        tutText.text = tutorialMessage[indexText];
+        indexText++;
+        npcScript.enabled = false;//verhindert Endscreen
+        shootScript.enabled = true; // erkläre schießen
+        shootUpZone.SetActive(true);
+        shootDownZone.SetActive(true);
+
+        while (!npcDead) //Bis das NPC Schiff zerstört ist, geht es nicht weiter
+        {
+            yield return null;
+        }
+
+        tutText.text = tutorialMessage[indexText]; //wir wollen die Schiffe nicht abschießen
+        indexText++;
+        while (!next)
+        {
+            yield return null;
+        }
+        next = false;
+
+        enemy.SetActive(true);
+
+        tutText.text = tutorialMessage[indexText]; //dies ist eine Sirene
+        indexText++;
+        while (!next)
+        {
+            yield return null;
+        }
+        next = false;
+
+        tutText.text = tutorialMessage[indexText]; //Beschütze das Schiff
+
+        npcScript.enabled = true;//starte NPC Ship
 
 
     }

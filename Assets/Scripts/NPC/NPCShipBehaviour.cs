@@ -9,6 +9,7 @@ public class NPCShipBehaviour : MonoBehaviour {
     bool go = false;
     public float speed = 0.5f;
     //Vector3 startTrans;
+
 	// Use this for initialization
 	void Start () {
         //startTrans = transform.position;
@@ -57,5 +58,8 @@ public class NPCShipBehaviour : MonoBehaviour {
         yield return new WaitForSeconds(1);
         Destroy(this.gameObject);
     }
-
+    public void SetGo()
+    {
+        go = !go;
+    }
 }
