@@ -109,7 +109,7 @@ public class SpecialsMainShip : MonoBehaviour {
             allyArray[i].GetComponent<Collider2D>().enabled = true;
             allyArray[i].transform.GetChild(0).gameObject.SetActive(false);
         }
-        CooldownSetting(1, cooldown);
+        CooldownSetting(0, cooldown);
     }
     IEnumerator BombShoot()
     {
@@ -117,7 +117,7 @@ public class SpecialsMainShip : MonoBehaviour {
         yield return new WaitForSeconds(bombShotDuration);
         shootScript.bombShoot = false;
 
-        CooldownSetting(2, cooldown);
+        CooldownSetting(1, cooldown);
     }
     IEnumerator MortarShoot()
     {
@@ -140,7 +140,7 @@ public class SpecialsMainShip : MonoBehaviour {
         //hier Schuss start Animation
         yield return new WaitForSeconds(mortarStartTime);
         Instantiate(MortarPref,new Vector3(posi.x, posi.y, 0) , new Quaternion(0, 0, 0, 0));
-        CooldownSetting(3, cooldown);
+        CooldownSetting(2, cooldown);
        
        
     }
