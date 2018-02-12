@@ -16,10 +16,12 @@ public class TutorialScript : MonoBehaviour {
     int indexText;
     Text tutText;
     GameObject playerShip;
+    GameObject textPanel;
     ShootMainShip shootScript;
     SpawnNPCShips npcScript;
     bool next;
     bool npcDead;
+    EndScreen endscreen;
 
 	void Start () {
         playerShip = GameObject.FindGameObjectWithTag("Player");
@@ -29,7 +31,9 @@ public class TutorialScript : MonoBehaviour {
         shootScript.enabled = false;
         npcScript = GetComponent<SpawnNPCShips>();
         tutText = tutStuff.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
+        textPanel = tutStuff.transform.GetChild(0).gameObject;
         arrows = new Image[tutStuff.transform.childCount - 1];
+        endscreen = GetComponent<EndScreen>();
         for(int i = 0; i < arrows.Length; i++)
         {
             arrows[i] = tutStuff.transform.GetChild(i + 1).GetComponent<Image>();
@@ -149,9 +153,48 @@ public class TutorialScript : MonoBehaviour {
         next = false;
 
         tutText.text = tutorialMessage[indexText]; //Beschütze das Schiff
+        indexText++;
 
+        npcScript.infinite = true;
+        npcScript.spawnedAll = false;
         npcScript.enabled = true;//starte NPC Ship
+        npcScript.RestartSpawning();
+        
+        while(PlayerPrefs.GetFloat("Points") < 1)
+        {
+            yield return null;
+        }
+        npcScript.enabled = false;
+        endscreen.ShowEndscreen(); //endscreen erklärung ab hier
+        yield return new WaitForSeconds(1f);
+        arrows[3].enabled = true;
+        tutText.text = tutorialMessage[indexText];
+        indexText++;
+        next = false;
+        while (!next)
+        {
+            yield return null;
+        }
+        next = false;
+        arrows[3].enabled = false;
+        tutText.text = tutorialMessage[indexText];
+        indexText++;
+        arrows[4].enabled = true;
 
-
+        while (!next)
+        {
+            yield return null;
+        }
+        next = false;
+        arrows[4].enabled = false;
+        tutText.text = tutorialMessage[indexText];
+        indexText++;
+        while (!next)
+        {
+            yield return null;
+        }
+        next = false;
+        textPanel.SetActive(false);
+        arrows[5].enabled = true;
     }
 }

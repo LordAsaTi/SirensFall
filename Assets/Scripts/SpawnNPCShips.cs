@@ -7,6 +7,7 @@ public class SpawnNPCShips : MonoBehaviour {
     public GameObject prefShip;
     public GameObject attentionTri;
     public EndScreen endscreen;
+    public bool infinite;
 
     Vector3[] laneVector = new Vector3[5]; // the white ones
     public float shipSpeed = 0.5f;
@@ -64,6 +65,18 @@ public class SpawnNPCShips : MonoBehaviour {
             SpawnShip(spawnArray[i]);
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
-        spawnedAll = true;
+        if (!infinite)
+        {
+            spawnedAll = true;
+        }
+        else
+        {
+            StartCoroutine(ShipSpawning());
+        }
+        
+    }
+    public void RestartSpawning()
+    {
+        StartCoroutine(ShipSpawning());
     }
 }
