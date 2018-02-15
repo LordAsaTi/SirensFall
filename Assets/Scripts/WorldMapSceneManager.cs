@@ -9,4 +9,8 @@ public class WorldMapSceneManager : MonoBehaviour {
     {
         SceneManager.LoadScene(sceneNumber);
     }
+    public void LoadLevel(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
