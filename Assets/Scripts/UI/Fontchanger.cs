@@ -9,7 +9,10 @@ public class Fontchanger : MonoBehaviour {
 	void Start () {
         var textComponents = Component.FindObjectsOfType<Text>();
         foreach (var component in textComponents)
-            component.font = ;
+        {
+            //component.font = <Font hier>;
+        }
+
 
     }
 }
