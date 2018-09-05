@@ -8,35 +8,79 @@ public class SoundOption : MonoBehaviour {
     bool AudioOn = true;
     GameObject SoundOn;
     GameObject SoundOff;
+    public bool inLevel = true;
 
 	// Use this for initialization
 	void Start () {
-        SoundOff = GameObject.Find("SoundOff");
-        SoundOn = GameObject.Find("SoundOn");
-        SoundOff.SetActive(false);
+        if (!inLevel)
+        {
+            SoundOff = GameObject.Find("SoundOff");
+            SoundOn = GameObject.Find("SoundOn");
+            SoundOff.SetActive(false);
+        }
+        
+        if (PlayerPrefs.HasKey("AudioOn"))
+        {
+            if (PlayerPrefs.GetInt("AudioOn") == 1)
+            {
+                AudioOn = true;
+            }
+            else
+            {
+                AudioOn = false;
+            }
+            ConfigAudio();
+        }
+        else
+        {
+            PlayerPrefs.SetInt("AudioOn", 1);
+        }
+        ; // 1 = On 0 = Off
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
     public void SwitchSound()
     {
-        if (AudioOn)
+        
+        AudioOn = !AudioOn;
+        ConfigAudio();
+        SaveAudio();
+
+    }
+    private void ConfigAudio()
+    {
+        if (!AudioOn)
         {
             AudioListener.volume = 0;
             AudioListener.pause = true;
-            SoundOn.SetActive(false);
-            SoundOff.SetActive(true);
+            if (!inLevel)
+            {
+                SoundOn.SetActive(false);
+                SoundOff.SetActive(true);
+            }
+            
         }
         else
         {
             AudioListener.volume = 1;
             AudioListener.pause = false;
-            SoundOff.SetActive(false);
-            SoundOn.SetActive(true);
+            if (!inLevel)
+            {
+                SoundOff.SetActive(false);
+                SoundOn.SetActive(true);
+            }
+            
         }
-        AudioOn = !AudioOn;
-
     }
+    public void SaveAudio()
+    {
+        if (AudioOn)
+        {
+            PlayerPrefs.SetInt("AudioOn", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("AudioOn", 0);
+        }
+    }
+        
 }
