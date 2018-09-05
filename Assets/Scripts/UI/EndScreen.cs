@@ -11,12 +11,14 @@ public class EndScreen : MonoBehaviour {
     Text highScore;
     Image starFilling;
     string highScoreName;
+    int levelNumber;
     float maxPoints;
 	void Start () {
         score = UIOver.transform.GetChild(2).GetComponent<Text>();
         highScore = UIOver.transform.GetChild(3).GetComponent<Text>();
         starFilling = UIOver.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
         highScoreName = SceneManager.GetActiveScene().name + "_High"; //Example Level_1_High
+        levelNumber = SceneManager.GetActiveScene().buildIndex - 1;  // Tutorialbuild index könnte alles versauen bei weiteren einfügen;
     }
 	
 	// Update is called once per frame
@@ -38,6 +40,9 @@ public class EndScreen : MonoBehaviour {
         else
         {
             PlayerPrefs.SetFloat(highScoreName, PlayerPrefs.GetFloat("Points"));
+
+            if(SceneManager.GetActiveScene().name != "Tutorial")
+                PlayerPrefs.SetInt("LevelProgress", levelNumber);
         }
         highScore.text += PlayerPrefs.GetFloat(highScoreName).ToString();
     }
