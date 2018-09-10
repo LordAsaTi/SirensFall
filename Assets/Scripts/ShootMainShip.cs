@@ -13,6 +13,9 @@ public class ShootMainShip : MonoBehaviour {
     float laneHeight;
     Animator animatorUp;
     Animator animatorDown;
+    private AudioSource source;
+    public AudioClip shootClip;
+    public AudioClip bombShootClip;
 
     void Start () {
         myTransform = GetComponent<Transform>();
@@ -20,6 +23,7 @@ public class ShootMainShip : MonoBehaviour {
         bombShoot = false;
         animatorUp = transform.GetChild(1).GetComponent<Animator>();
         animatorDown = transform.GetChild(2).GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
     }
 	
 
@@ -36,12 +40,15 @@ public class ShootMainShip : MonoBehaviour {
     }
     void Shoot(int direction)
     {
+        
         if (bombShoot)
         {
+            source.PlayOneShot(bombShootClip, 1);
             Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y + (laneHeight * direction) * 4, -1), BombPref.transform.rotation);
         }
         else
         {
+            source.PlayOneShot(shootClip, 1);
             projectilDown = Instantiate(projectilPref, new Vector3(myTransform.position.x, myTransform.position.y + (0.7f * direction), myTransform.position.z), myTransform.rotation);
             projectilDown.SendMessage("SetDirection", direction);
             if(direction == -1)
