@@ -8,12 +8,13 @@ public class NPCShipBehaviour : MonoBehaviour {
 
     bool go = false;
     public float speed = 0.5f;
+    private Animator animator;
     //Vector3 startTrans;
 
 	// Use this for initialization
 	void Start () {
         //startTrans = transform.position;
-
+        animator = this.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -42,7 +43,8 @@ public class NPCShipBehaviour : MonoBehaviour {
     void Attacked()
     {
         go = false;
-        GetComponent<SpriteRenderer>().color = Color.red;
+        //GetComponent<SpriteRenderer>().color = Color.red;
+        animator.SetTrigger("dies");
         StartCoroutine(Despawn());
     }
     public float getPointValue()
