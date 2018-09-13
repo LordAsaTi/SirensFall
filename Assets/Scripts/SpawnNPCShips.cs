@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public class SpawnNPCShips : MonoBehaviour {
     public GameObject attentionTri;
     public EndScreen endscreen;
     public bool infinite;
+    public bool randomSpawn;
+    public int randomSpawnNumber;
 
     Vector3[] laneVector = new Vector3[5]; // the white ones
     public float shipSpeed = 0.5f;
@@ -30,11 +33,21 @@ public class SpawnNPCShips : MonoBehaviour {
 
         
         specialsScript = FindObjectOfType<SpecialsMainShip>();
-        StartCoroutine(ShipSpawning());
+        if (randomSpawn)
+        {
+            StartCoroutine(RandomShipSpawning());
+        }
+        else
+        {
+            StartCoroutine(ShipSpawning());
+        }
+
+        
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+
+    // Update is called once per frame
+    void Update () {
         if(spawnedAll && GameObject.FindGameObjectWithTag("Ally") == null)
         {
             GetComponent<EndScreen>().ShowEndscreen();
@@ -78,5 +91,22 @@ public class SpawnNPCShips : MonoBehaviour {
     public void RestartSpawning()
     {
         StartCoroutine(ShipSpawning());
+    }
+
+    private IEnumerator RandomShipSpawning()
+    {
+        for (int i = 0; i < randomSpawnNumber; i++)
+        {
+            SpawnShip((int)UnityEngine.Random.Range(0, 4));
+            yield return new WaitForSeconds(timeBetweenSpawns);
+        }
+        if (!infinite)
+        {
+            spawnedAll = true;
+        }
+        else
+        {
+            StartCoroutine(ShipSpawning());
+        }
     }
 }

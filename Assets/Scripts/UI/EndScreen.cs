@@ -18,7 +18,7 @@ public class EndScreen : MonoBehaviour {
         highScore = UIOver.transform.GetChild(3).GetComponent<Text>();
         starFilling = UIOver.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
         highScoreName = SceneManager.GetActiveScene().name + "_High"; //Example Level_1_High
-        levelNumber = SceneManager.GetActiveScene().buildIndex - 1;  // Tutorialbuild index könnte alles versauen bei weiteren einfügen;
+        levelNumber = SceneManager.GetActiveScene().buildIndex - 1;  // Tutorialbuild index könnte alles versauen bei weiteren einfügen - FIXED;
     }
 	
 	// Update is called once per frame

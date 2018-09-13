@@ -22,6 +22,11 @@ public class WorldMapSceneManager : MonoBehaviour {
     public void LoadLevel(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        
+    }
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
     }
 
     IEnumerator LoadAsynchronously (int sceneIndex)
@@ -37,4 +42,5 @@ public class WorldMapSceneManager : MonoBehaviour {
             yield return null;
         }
     }
+    
 }
