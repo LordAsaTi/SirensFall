@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SirenAttackSub : MonoBehaviour {
 
-    public GameObject siren;
+    GameObject siren;
 	// Use this for initialization
 	void Start () {
         siren = this.transform.parent.gameObject;

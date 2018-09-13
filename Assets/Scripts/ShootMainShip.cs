@@ -8,6 +8,8 @@ public class ShootMainShip : MonoBehaviour {
     public GameObject BombPref;
     [HideInInspector]
     public bool bombShoot;
+    [HideInInspector]
+    public bool mortarShoot;
     GameObject projectilDown;
     Transform myTransform;
     float laneHeight;
@@ -41,10 +43,14 @@ public class ShootMainShip : MonoBehaviour {
     void Shoot(int direction)
     {
         
-        if (bombShoot)
+        if (bombShoot || mortarShoot)
         {
-            source.PlayOneShot(bombShootClip, 1);
-            Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y + (laneHeight * direction) * 4, -1), BombPref.transform.rotation);
+            if (bombShoot)
+            {
+                source.PlayOneShot(bombShootClip, 1);
+                Instantiate(BombPref, new Vector3(myTransform.position.x, myTransform.position.y + (laneHeight * direction) * 4, -1), BombPref.transform.rotation);
+            }
+            
         }
         else
         {

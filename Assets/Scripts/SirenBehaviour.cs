@@ -9,11 +9,13 @@ public class SirenBehaviour : MonoBehaviour {
     float coolDownInSec = 7f;
     bool dead = false;
     Animator animator;
+    SpriteRenderer sRender;
 
 	// Use this for initialization
 	void Start () {
         maxLife = life;
         animator = this.transform.GetChild(0).GetComponent<Animator>();
+        sRender = transform.GetChild(0).GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +40,8 @@ public class SirenBehaviour : MonoBehaviour {
     void DmgTaken(float dmg)
     {
         life -= dmg;
+
+        StartCoroutine(FlashRed());
         if(life <= 0 && !dead)
         {
             //GetComponent<SpriteRenderer>().color = Color.red;
@@ -57,10 +61,18 @@ public class SirenBehaviour : MonoBehaviour {
     IEnumerator Dead()
     {
         yield return new WaitForSeconds(coolDownInSec);
-        dead = false;
-        life = maxLife;
+        
         //GetComponent<SpriteRenderer>().color = Color.green;
         animator.SetTrigger("Alive");
+        yield return new WaitForSeconds(1f);
+        dead = false;
+        life = maxLife;
+    }
+    IEnumerator FlashRed()
+    {
+        sRender.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        sRender.color = Color.white;
     }
 
 

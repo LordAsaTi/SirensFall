@@ -9,7 +9,12 @@ public class SpecialsMainShip : MonoBehaviour {
     float shieldDuration = 5f;
     float bombShotDuration = 5f;
     float mortarStartTime = 1f;
-    float cooldown;
+    float windDuration = 5f;
+
+    float cooldownShield = 10f;
+    float cooldownCanon = 15f;
+    float cooldownMortar = 5f;
+    float cooldownWind = 10f;
     GameObject ButtonSpez1;
     GameObject ButtonSpez2;
     public GameObject MortarPref;
@@ -49,20 +54,21 @@ public class SpecialsMainShip : MonoBehaviour {
     }
     public void StartShield()
     {
-        cooldown = 10f;
         StartCoroutine("ShieldAlly");
     }
     public void StartBombShoot()
     {
-        cooldown = 15f;
         StartCoroutine(BombShoot());
     }
     public void StartMortar()
     {
-        cooldown = 200f;
         StartCoroutine(MortarShoot());
-
     }
+    public void StartWind()
+    {
+        StartCoroutine(WindAlly());
+    }
+
     public void SpezialSelect(int number)
     {
         switch (number)
@@ -76,6 +82,9 @@ public class SpecialsMainShip : MonoBehaviour {
             case 2:
                 StartMortar();
                 break;
+            case 3:
+                StartWind();
+                break;
             default:
                 Debug.Log("false Input");
                 break;
@@ -83,7 +92,8 @@ public class SpecialsMainShip : MonoBehaviour {
     }
     void CooldownSetting(int type, float coolDown)
     {
-        if(type == PlayerPrefs.GetInt(spezName1))
+        //Debug.Log(type + "    |     " + PlayerPrefs.GetInt(spezName2));
+        if (type == PlayerPrefs.GetInt(spezName1))
         {
             ButtonSpez1.SendMessage("SetCooldown", coolDown);
         }
@@ -109,7 +119,7 @@ public class SpecialsMainShip : MonoBehaviour {
             allyArray[i].GetComponent<Collider2D>().enabled = true;
             allyArray[i].transform.GetChild(0).gameObject.SetActive(false);
         }
-        CooldownSetting(0, cooldown);
+        CooldownSetting(0, cooldownShield);
     }
     IEnumerator BombShoot()
     {
@@ -117,12 +127,13 @@ public class SpecialsMainShip : MonoBehaviour {
         yield return new WaitForSeconds(bombShotDuration);
         shootScript.bombShoot = false;
 
-        CooldownSetting(1, cooldown);
+        CooldownSetting(1, cooldownCanon);
     }
     IEnumerator MortarShoot()
     {
 
 #if UNITY_EDITOR
+        shootScript.mortarShoot = true;
         while (!Input.GetMouseButtonDown(0))
         {
             yield return null;
@@ -138,11 +149,27 @@ public class SpecialsMainShip : MonoBehaviour {
         Vector3 posi = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 #endif
         //hier Schuss start Animation
+        
         yield return new WaitForSeconds(mortarStartTime);
         Instantiate(MortarPref,new Vector3(posi.x, posi.y, 0) , new Quaternion(0, 0, 0, 0));
-        CooldownSetting(2, cooldown);
+        CooldownSetting(2, cooldownMortar);
+        shootScript.mortarShoot = false; 
        
-       
+    }
+    IEnumerator WindAlly()
+    {
+        float oldSpeed = 0; 
+        for (int i = 0; i < allyArray.Length; i++)
+        {
+            oldSpeed = allyArray[0].GetComponent<NPCShipBehaviour>().speed;
+            allyArray[i].GetComponent<NPCShipBehaviour>().speed = oldSpeed * 2;
+        }
+        yield return new WaitForSeconds(windDuration);
+        for (int i = 0; i < allyArray.Length; i++)
+        {
+            allyArray[i].GetComponent<NPCShipBehaviour>().speed = oldSpeed;
+        }
+        CooldownSetting(3, cooldownWind);
     }
 
 

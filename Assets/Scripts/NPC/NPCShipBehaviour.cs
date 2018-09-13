@@ -9,12 +9,16 @@ public class NPCShipBehaviour : MonoBehaviour {
     bool go = false;
     public float speed = 0.5f;
     private Animator animator;
+    public AudioClip[] screams;
+    private AudioSource source;
+        
     //Vector3 startTrans;
 
 	// Use this for initialization
 	void Start () {
         //startTrans = transform.position;
         animator = this.GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -45,6 +49,7 @@ public class NPCShipBehaviour : MonoBehaviour {
         go = false;
         //GetComponent<SpriteRenderer>().color = Color.red;
         animator.SetTrigger("dies");
+        source.PlayOneShot(screams[(int)Random.Range(0, screams.Length - 1)], 1);
         StartCoroutine(Despawn());
     }
     public float getPointValue()
