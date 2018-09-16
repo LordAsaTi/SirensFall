@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
 
-    public GameObject[] Spawnpoints; // vielleicht doch parent und get children?
+    public GameObject spawnParent;
+    private GameObject[] Spawnpoints; // vielleicht doch parent und get children?
     public float timeBetweenSpawns;
     public int maxEnemyCount;
     private int spawnCount;
@@ -14,6 +15,12 @@ public class EnemySpawner : MonoBehaviour {
     // Update is called once per frame
     private void Start()
     {
+        Spawnpoints = new GameObject[spawnParent.transform.childCount];
+        for (int i = 0; i < spawnParent.transform.childCount; i++)
+        {
+            Spawnpoints[i] = spawnParent.transform.GetChild(i).gameObject ;
+        }
+        
         for (int i = 0; i < Spawnpoints.Length; i++)
         {
             Spawnpoints[i].SetActive(false);
@@ -52,5 +59,9 @@ public class EnemySpawner : MonoBehaviour {
             }
         }
         
+    }
+    public void ChangeEnemyCount()
+    {
+        spawnCount -= 1; 
     }
 }

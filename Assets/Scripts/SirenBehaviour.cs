@@ -8,6 +8,10 @@ public class SirenBehaviour : MonoBehaviour {
     float maxLife;
     float coolDownInSec = 7f;
     bool dead = false;
+
+
+    bool randomSpawn;
+    public EnemySpawner enemySpawner;
     Animator animator;
     SpriteRenderer sRender;
 
@@ -16,6 +20,10 @@ public class SirenBehaviour : MonoBehaviour {
         maxLife = life;
         animator = this.transform.GetChild(0).GetComponent<Animator>();
         sRender = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        if(enemySpawner != null)
+        {
+            randomSpawn = true;
+        }
 	}
 	
 	// Update is called once per frame
@@ -60,6 +68,11 @@ public class SirenBehaviour : MonoBehaviour {
     }
     IEnumerator Dead()
     {
+        if (randomSpawn)
+        {
+            enemySpawner.ChangeEnemyCount();
+            this.gameObject.SetActive(false);
+        }
         yield return new WaitForSeconds(coolDownInSec);
         
         //GetComponent<SpriteRenderer>().color = Color.green;
