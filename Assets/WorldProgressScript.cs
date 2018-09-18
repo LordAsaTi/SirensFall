@@ -27,8 +27,12 @@ public class WorldProgressScript : MonoBehaviour {
         {
             for (int i = 0; i <= PlayerPrefs.GetInt("LevelProgress"); i++)
             {
-                buttons[i].SetActive(true);
-                StartCoroutine(Filler(i));
+                if(buttons.Length >  i)
+                {
+                    buttons[i].SetActive(true);
+                    StartCoroutine(Filler(i));
+                }
+                
             }
             
         }
